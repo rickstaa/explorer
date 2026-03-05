@@ -2,6 +2,7 @@ import AppBar from "@components/AppBar";
 import Drawer from "@components/Drawer";
 import Hamburger from "@components/Hamburger";
 import InactiveWarning from "@components/InactiveWarning";
+import OrchestratorFeeWarning from "@components/OrchestratorFeeWarning";
 import Logo from "@components/Logo";
 import PopoverLink from "@components/PopoverLink";
 import ProgressBar from "@components/ProgressBar";
@@ -706,6 +707,9 @@ const Layout = ({ children, title = "Livepeer Explorer" }) => {
                   <Box css={{ width: "100%" }}>
                     {!asPath.includes("/migrate") && accountAddress && (
                       <InactiveWarning />
+                    )}
+                    {!asPath.includes("/migrate") && accountAddress && (
+                      <OrchestratorFeeWarning />
                     )}
                     {!asPath?.includes("/migrate") && accountAddress && (
                       <Claim />

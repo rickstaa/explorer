@@ -33,6 +33,7 @@ import { ArrowTopRightIcon } from "@modulz/radix-icons";
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
+  ExclamationTriangleIcon,
   Pencil1Icon,
 } from "@radix-ui/react-icons";
 import { OrchestratorsQueryResult, ProtocolQueryResult } from "apollo";
@@ -321,7 +322,7 @@ const OrchestratorList = ({
                       {formatAddress(row.values.id)}
                     </Box>
                   )}
-                  {/* {(row?.original?.daysSinceChangeParams ??
+                  {(row?.original?.daysSinceChangeParams ??
                       Number.MAX_VALUE) < 30 && (
                       <ExplorerTooltip
                         multiline
@@ -330,11 +331,11 @@ const OrchestratorList = ({
                         <Box>
                           <Box
                             as={ExclamationTriangleIcon}
-                            css={{ ml: "$2", color: "$neutral11" }}
+                            css={{ ml: "$2", color: "$amber11" }}
                           />
                         </Box>
                       </ExplorerTooltip>
-                    )} */}
+                    )}
                 </Flex>
               </Flex>
             </A>

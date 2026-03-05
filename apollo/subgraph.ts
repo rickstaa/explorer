@@ -9578,6 +9578,13 @@ export type AccountInactiveQueryVariables = Exact<{
 
 export type AccountInactiveQuery = { __typename: 'Query', delegator?: { __typename: 'Delegator', id: string, delegate?: { __typename: 'Transcoder', id: string, active: boolean } | null } | null, protocol?: { __typename: 'Protocol', id: string, pendingActivation: Array<{ __typename: 'Transcoder', id: string }> } | null };
 
+export type DelegateFeeChangeQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DelegateFeeChangeQuery = { __typename: 'Query', delegator?: { __typename: 'Delegator', id: string, delegate?: { __typename: 'Transcoder', id: string, feeShare: string, feeShareUpdateTimestamp: number, rewardCut: string, rewardCutUpdateTimestamp: number } | null } | null };
+
 export type CurrentRoundQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9844,6 +9851,48 @@ export function useAccountInactiveLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type AccountInactiveQueryHookResult = ReturnType<typeof useAccountInactiveQuery>;
 export type AccountInactiveLazyQueryHookResult = ReturnType<typeof useAccountInactiveLazyQuery>;
 export type AccountInactiveQueryResult = Apollo.QueryResult<AccountInactiveQuery, AccountInactiveQueryVariables>;
+export const DelegateFeeChangeDocument = gql`
+    query delegateFeeChange($id: ID!) {
+  delegator(id: $id) {
+    id
+    delegate {
+      id
+      feeShare
+      feeShareUpdateTimestamp
+      rewardCut
+      rewardCutUpdateTimestamp
+    }
+  }
+}
+    `;
+
+/**
+ * __useDelegateFeeChangeQuery__
+ *
+ * To run a query within a React component, call `useDelegateFeeChangeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDelegateFeeChangeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDelegateFeeChangeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDelegateFeeChangeQuery(baseOptions: Apollo.QueryHookOptions<DelegateFeeChangeQuery, DelegateFeeChangeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DelegateFeeChangeQuery, DelegateFeeChangeQueryVariables>(DelegateFeeChangeDocument, options);
+      }
+export function useDelegateFeeChangeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DelegateFeeChangeQuery, DelegateFeeChangeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DelegateFeeChangeQuery, DelegateFeeChangeQueryVariables>(DelegateFeeChangeDocument, options);
+        }
+export type DelegateFeeChangeQueryHookResult = ReturnType<typeof useDelegateFeeChangeQuery>;
+export type DelegateFeeChangeLazyQueryHookResult = ReturnType<typeof useDelegateFeeChangeLazyQuery>;
+export type DelegateFeeChangeQueryResult = Apollo.QueryResult<DelegateFeeChangeQuery, DelegateFeeChangeQueryVariables>;
 export const CurrentRoundDocument = gql`
     query currentRound {
   _meta {

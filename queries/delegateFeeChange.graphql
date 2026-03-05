@@ -1,0 +1,12 @@
+query delegateFeeChange($id: ID!) {
+  delegator(id: $id) {
+    id
+    delegate {
+      id
+      feeShare
+      feeShareUpdateTimestamp
+      rewardCut
+      rewardCutUpdateTimestamp
+    }
+  }
+}
