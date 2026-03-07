@@ -122,10 +122,10 @@ These platforms demonstrate mature patterns for natural language data exploratio
 
 ### 12. Tableau — Tableau AI (Einstein)
 
-- **What it does:** Tableau has integrated Salesforce Einstein AI for natural language querying, automated insights, and predictive analytics.
-- **AI features:** "Ask Data" for natural language queries, Einstein Discovery for predictions and recommendations, AI-generated explanations of data patterns.
-- **User interaction:** Type questions in plain language → Tableau generates the right visualization. AI highlights interesting patterns automatically.
-- **Unique approach:** Combines descriptive analytics (what happened) with predictive (what will happen) and prescriptive (what to do) AI.
+- **What it does:** Tableau has deeply integrated Salesforce Einstein AI, rebranding to "Tableau Einstein" as a unified BI+AI platform. Tableau Agent (formerly Einstein Copilot for Tableau) is now GA in Tableau Cloud Web Authoring and supported on Tableau Server (v2025.3+).
+- **AI features:** Tableau Agent translates natural language into calculations and visualizations, creates/updates complex calculations, generates dashboard summaries (Beta), and guides users through analytics workflows. "Tableau Semantics" provides a semantic layer for consistent AI grounding. Tableau Pulse delivers proactive AI-generated metric digests.
+- **User interaction:** Conversational AI panel within the authoring experience → describe what you need → Agent creates visualizations, writes calculations, and summarizes dashboards. Dashboard Narratives (Beta) generate insights from charts with a single click.
+- **Unique approach:** Built on Salesforce's Einstein Trust Layer for enterprise governance. Combines descriptive (what happened), predictive (what will happen), and prescriptive (what to do) AI. As of Tableau 2026.1, AI usage no longer consumes Einstein Request credits.
 
 ### 13. Databricks — AI/BI Dashboards & Genie
 
