@@ -1,0 +1,21 @@
+query delegateRewardCut($id: ID!, $delegate: String!, $timestamp_gte: Int!) {
+  delegator(id: $id) {
+    id
+    delegate {
+      id
+      rewardCut
+      rewardCutUpdateTimestamp
+    }
+  }
+  transcoderUpdateEvents(
+    where: { delegate: $delegate, timestamp_gte: $timestamp_gte }
+    orderBy: timestamp
+    orderDirection: desc
+    first: 5
+  ) {
+    id
+    rewardCut
+    feeShare
+    timestamp
+  }
+}

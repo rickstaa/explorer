@@ -10923,3 +10923,65 @@ export function useVoteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VoteQ
 export type VoteQueryHookResult = ReturnType<typeof useVoteQuery>;
 export type VoteLazyQueryHookResult = ReturnType<typeof useVoteLazyQuery>;
 export type VoteQueryResult = Apollo.QueryResult<VoteQuery, VoteQueryVariables>;
+export type DelegateRewardCutQueryVariables = Exact<{
+  id: Scalars['ID'];
+  delegate: Scalars['String'];
+  timestamp_gte: Scalars['Int'];
+}>;
+
+
+export type DelegateRewardCutQuery = { __typename: 'Query', delegator?: { __typename: 'Delegator', id: string, delegate?: { __typename: 'Transcoder', id: string, rewardCut: string, rewardCutUpdateTimestamp: number } | null } | null, transcoderUpdateEvents: Array<{ __typename: 'TranscoderUpdateEvent', id: string, rewardCut: string, feeShare: string, timestamp: number }> };
+
+export const DelegateRewardCutDocument = gql`
+    query delegateRewardCut($id: ID!, $delegate: String!, $timestamp_gte: Int!) {
+  delegator(id: $id) {
+    id
+    delegate {
+      id
+      rewardCut
+      rewardCutUpdateTimestamp
+    }
+  }
+  transcoderUpdateEvents(
+    where: {delegate: $delegate, timestamp_gte: $timestamp_gte}
+    orderBy: timestamp
+    orderDirection: desc
+    first: 5
+  ) {
+    id
+    rewardCut
+    feeShare
+    timestamp
+  }
+}
+    `;
+
+/**
+ * __useDelegateRewardCutQuery__
+ *
+ * To run a query within a React component, call `useDelegateRewardCutQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDelegateRewardCutQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDelegateRewardCutQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      delegate: // value for 'delegate'
+ *      timestamp_gte: // value for 'timestamp_gte'
+ *   },
+ * });
+ */
+export function useDelegateRewardCutQuery(baseOptions: Apollo.QueryHookOptions<DelegateRewardCutQuery, DelegateRewardCutQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DelegateRewardCutQuery, DelegateRewardCutQueryVariables>(DelegateRewardCutDocument, options);
+      }
+export function useDelegateRewardCutLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DelegateRewardCutQuery, DelegateRewardCutQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DelegateRewardCutQuery, DelegateRewardCutQueryVariables>(DelegateRewardCutDocument, options);
+        }
+export type DelegateRewardCutQueryHookResult = ReturnType<typeof useDelegateRewardCutQuery>;
+export type DelegateRewardCutLazyQueryHookResult = ReturnType<typeof useDelegateRewardCutLazyQuery>;
+export type DelegateRewardCutQueryResult = Apollo.QueryResult<DelegateRewardCutQuery, DelegateRewardCutQueryVariables>;

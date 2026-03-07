@@ -5,6 +5,7 @@ import InactiveWarning from "@components/InactiveWarning";
 import Logo from "@components/Logo";
 import PopoverLink from "@components/PopoverLink";
 import ProgressBar from "@components/ProgressBar";
+import RewardCutNotification from "@components/RewardCutNotification";
 import Search from "@components/Search";
 import TxStartedDialog from "@components/TxStartedDialog";
 import TxSummaryDialog from "@components/TxSummaryDialog";
@@ -706,6 +707,9 @@ const Layout = ({ children, title = "Livepeer Explorer" }) => {
                   <Box css={{ width: "100%" }}>
                     {!asPath.includes("/migrate") && accountAddress && (
                       <InactiveWarning />
+                    )}
+                    {!asPath.includes("/migrate") && accountAddress && (
+                      <RewardCutNotification />
                     )}
                     {!asPath?.includes("/migrate") && accountAddress && (
                       <Claim />
