@@ -2,7 +2,6 @@
 
 **Date:** March 2026
 **Status:** RFC (Request for Comments)
-**Scope:** Single MVP Pull Request
 
 ---
 
@@ -12,11 +11,11 @@ The Livepeer Explorer is the primary interface for orchestrators, delegators, an
 
 An AI companion would let anyone — from first-time visitors to power users — ask natural language questions like "Who are the top orchestrators by performance?" or "What's the current participation rate?" and get immediate, structured answers with tables and charts. This dramatically lowers the barrier to understanding protocol health and making informed staking decisions.
 
-This plan covers an MVP that ships in a **single pull request** — focused, read-only, and cost-conscious.
+This document covers the MVP — focused, read-only, and cost-conscious — followed by a roadmap for future enhancements.
 
 ---
 
-## MVP Scope (This PR)
+## MVP Scope
 
 ### What We're Building
 
@@ -36,7 +35,7 @@ A floating chat panel that lets users ask questions about the Livepeer protocol 
 - Wallet-aware personalized queries
 - Dune Analytics integration (historical time-series data)
 
-These are planned for follow-up PRs (see [Future Roadmap](#future-roadmap) below).
+These are planned for future iterations (see [Future Roadmap](#future-roadmap) below).
 
 ---
 
@@ -258,7 +257,7 @@ Each tool is a Vercel AI SDK `tool()` with Zod-validated parameters. Tools reuse
 
 ## Future Roadmap
 
-These features are **not** in the MVP but are planned for follow-up PRs:
+These features are **not** in the MVP but are planned for future iterations:
 
 ### Phase 2: App-Aware Navigation
 - **Navigation tool** — AI suggests and triggers deep links to Explorer pages (e.g., "View this orchestrator" → navigates to `/accounts/0x.../orchestrating`)
