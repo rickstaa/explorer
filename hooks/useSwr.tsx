@@ -69,9 +69,25 @@ export const useChangefeedData = () => {
   return data ?? null;
 };
 
+export const useCurrentRoundData = () => {
+  const { data } = useSWR<CurrentRoundInfo>(`/current-round`, {
+    refreshInterval: 10000,
+  });
+
+  return data ?? null;
+};
+
 export const useSupplyChangeData = () => {
-  const { data, error, isValidating } =
-    useSWR<SupplyChangeData>(`/supply-change`);
+  const currentRound = useCurrentRoundData();
+
+  // Key on current round ID so we only refetch when a new round starts
+  const { data, error, isValidating } = useSWR<SupplyChangeData>(
+    currentRound?.id ? `/supply-change?round=${currentRound.id}` : null,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
   return {
     data: data ?? null,
@@ -105,14 +121,6 @@ export const useScoreData = (address: string | undefined | null) => {
   const { data } = useSWR<PerformanceMetrics>(
     address ? `/score/${address.toLowerCase()}` : null
   );
-
-  return data ?? null;
-};
-
-export const useCurrentRoundData = () => {
-  const { data } = useSWR<CurrentRoundInfo>(`/current-round`, {
-    refreshInterval: 10000,
-  });
 
   return data ?? null;
 };
