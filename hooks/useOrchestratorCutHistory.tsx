@@ -15,6 +15,13 @@ export type CutDataPoint = {
 
 type Transcoder = NonNullable<AccountQueryResult["data"]>["transcoder"];
 
+// A warning is surfaced on the cut history charts when an orchestrator records
+// at least this many value transitions within the recent window. Kept
+// deliberately lenient — see the chart tooltip copy for why this is
+// informational rather than a judgement.
+export const FREQUENT_CUT_CHANGE_WINDOW_DAYS = 30;
+export const FREQUENT_CUT_CHANGE_MIN_COUNT = 3;
+
 export function useOrchestratorCutHistory(transcoder?: Transcoder) {
   const { data, loading } = useTranscoderUpdateEventsQuery({
     variables: {
@@ -91,12 +98,60 @@ export function useOrchestratorCutHistory(transcoder?: Transcoder) {
     ? chartData[chartData.length - 1].feeCut / 100
     : 0;
 
+  // Count how many times the reward / fee cut values actually changed
+  // within the recent window. We walk events in order so a transition that
+  // straddles the window boundary is still attributed to the in-window event.
+  const { rewardCutChangeCount, feeCutChangeCount } = useMemo(() => {
+    const events = data?.transcoderUpdateEvents ?? [];
+    const cutoff =
+      // eslint-disable-next-line react-hooks/purity
+      Math.floor(Date.now() / 1000) - FREQUENT_CUT_CHANGE_WINDOW_DAYS * 86400;
+
+    let rewardChanges = 0;
+    let feeChanges = 0;
+    let prevReward: string | undefined;
+    let prevFee: string | undefined;
+
+    for (const e of events) {
+      if (
+        e.timestamp >= cutoff &&
+        prevReward !== undefined &&
+        String(e.rewardCut) !== prevReward
+      ) {
+        rewardChanges += 1;
+      }
+      if (
+        e.timestamp >= cutoff &&
+        prevFee !== undefined &&
+        String(e.feeShare) !== prevFee
+      ) {
+        feeChanges += 1;
+      }
+      prevReward = String(e.rewardCut);
+      prevFee = String(e.feeShare);
+    }
+
+    return {
+      rewardCutChangeCount: rewardChanges,
+      feeCutChangeCount: feeChanges,
+    };
+  }, [data]);
+
+  const hasFrequentRewardCutChanges =
+    rewardCutChangeCount >= FREQUENT_CUT_CHANGE_MIN_COUNT;
+  const hasFrequentFeeCutChanges =
+    feeCutChangeCount >= FREQUENT_CUT_CHANGE_MIN_COUNT;
+
   return {
     chartData,
     rewardCutData,
     feeCutData,
     baseRewardCut,
     baseFeeCut,
+    rewardCutChangeCount,
+    feeCutChangeCount,
+    hasFrequentRewardCutChanges,
+    hasFrequentFeeCutChanges,
     loading,
   };
 }

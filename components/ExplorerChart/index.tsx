@@ -58,6 +58,7 @@ export type Group = "day" | "week" | "year" | "all";
 const ExplorerChart = ({
   title,
   tooltip,
+  titleTrailing,
   data,
   base,
   basePercentChange,
@@ -70,6 +71,7 @@ const ExplorerChart = ({
 }: {
   title: string;
   tooltip: React.ReactNode;
+  titleTrailing?: React.ReactNode;
   base: number;
   basePercentChange: number;
   data: ChartDatum[];
@@ -246,35 +248,40 @@ const ExplorerChart = ({
           zIndex: 3,
         }}
       >
-        <ExplorerTooltip
-          multiline
-          side="bottom"
-          content={tooltip ? <div>{tooltip}</div> : <></>}
-        >
-          <Flex
-            css={{
-              alignItems: "center",
-            }}
+        <Flex css={{ alignItems: "center" }}>
+          <ExplorerTooltip
+            multiline
+            side="bottom"
+            content={tooltip ? <div>{tooltip}</div> : <></>}
           >
-            <Text
+            <Flex
               css={{
-                fontWeight: 600,
-                fontSize: "$2",
-                color: "white",
+                alignItems: "center",
               }}
             >
-              {title}
-            </Text>
-            {tooltip && (
-              <Box css={{ marginLeft: "$1" }}>
-                <Box
-                  as={QuestionMarkCircledIcon}
-                  css={{ color: "$neutral11" }}
-                />
-              </Box>
-            )}
-          </Flex>
-        </ExplorerTooltip>
+              <Text
+                css={{
+                  fontWeight: 600,
+                  fontSize: "$2",
+                  color: "white",
+                }}
+              >
+                {title}
+              </Text>
+              {tooltip && (
+                <Box css={{ marginLeft: "$1" }}>
+                  <Box
+                    as={QuestionMarkCircledIcon}
+                    css={{ color: "$neutral11" }}
+                  />
+                </Box>
+              )}
+            </Flex>
+          </ExplorerTooltip>
+          {titleTrailing && (
+            <Box css={{ marginLeft: "$1" }}>{titleTrailing}</Box>
+          )}
+        </Flex>
         <Flex>
           {(data?.length || 0) <= 0 ? (
             <Skeleton css={{ marginTop: "$1", width: "100%", height: 20 }} />
